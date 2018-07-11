@@ -24,45 +24,54 @@ MainWindow::~MainWindow()
 //     }
 //     return QObject::eventFilter(obj, event);
 // }
-void MainWindow::printer(QKeySequence *seq)
+void MainWindow::printer(unsigned int index)
 {
-    qDebug() << "hi: " << seq->toString();
+    qDebug() << "Pushed: " << _keys[index]->seq->toString();
 }
 
 void MainWindow::printer()
 {
-    qDebug() << "hi 1: ";
+    qDebug() << "printer";
+}
+
+void MainWindow::printKeys()
+{
+    qDebug() << "Key list: ";
+
+    for (std::shared_ptr<KeyElement> key : _keys)
+    {
+        qDebug() << "* " << key->seq->toString();
+    }
+}
+
+bool MainWindow::registerKey(Qt::Key key)
+{
+    const unsigned int index = _keys.size();
+
+    std::shared_ptr<KeyElement> keye = std::make_shared<KeyElement> ();
+    keye->seq = std::make_shared<QKeySequence> (key);
+    keye->gshortcut = std::make_shared<QxtGlobalShortcut> (*keye->seq);
+
+    if ( !keye->gshortcut->isValid() )
+        return false;
+
+    _keys.push_back(keye);
+    qDebug() << "Adding: " << _keys[index]->seq->toString() << "at index: " << index;
+
+    QObject::connect(_keys[index]->gshortcut.get(), &QxtGlobalShortcut::activated, _keys[index]->gshortcut.get(),
+                [=]{ printer(index); });
+
+    return true;
 }
 
 void MainWindow::handleInputs()
 {
     qDebug() << "handleInputs";
 
-    Qt::Key key = Qt::Key_0;
-
-    QTextStream out(stdout);
-    QTextStream err(stderr);
-
-    shortcut = new QKeySequence(key);
-    globalShortcut = new QxtGlobalShortcut(*shortcut);
-
-
-    //globalShortcut->setEnabled(true);
-
-    // if ( !globalShortcut.isValid() ) {
-    //     err << QString("Error: Failed to set shortcut %1")
-    //         .arg(shortcut.toString()) << endl;
-    //     return;
-    // }
-
-    out << QString("Press shortcut %1 (or CTRL+C to exit)").arg(shortcut->toString()) << endl;
-
-    QObject::connect(
-                globalShortcut, &QxtGlobalShortcut::activated, globalShortcut,
-                [this]{ printer(shortcut); });
-    // QObject::connect(
-    //             globalShortcut, &QxtGlobalShortcut::activated, globalShortcut,
-    //             this->printer());
-
-
+    for (Qt::Key key : key_list)
+    {
+        if ( !registerKey(key) )
+            qDebug() << QString("Error: Failed to set shortcut %1").arg(QString(key)) << endl;
+    }
+    printKeys();
 }

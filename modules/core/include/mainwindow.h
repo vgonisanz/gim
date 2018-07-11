@@ -5,7 +5,9 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-#include "qxtglobalshortcut.h"
+#include <memory>
+
+#include "key.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,18 +21,20 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void printKeys();
+
 private:
     Ui::MainWindow *ui;
 
     void handleInputs();
+    bool registerKey(Qt::Key key);
 
-    QKeySequence *shortcut;
-    QxtGlobalShortcut *globalShortcut;
+    std::vector<std::shared_ptr<KeyElement> > _keys;
 
 protected:
     //bool eventFilter(QObject *obj, QEvent *event);
-    static void printer();
-    static void printer(QKeySequence *seq);
+    void printer();
+    void printer(unsigned int index);
 };
 
 #endif // MAINWINDOW_H
