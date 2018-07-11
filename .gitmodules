@@ -1,0 +1,3 @@
+[submodule "3rdParty/qxtglobalshortcut"]
+	path = 3rdParty/qxtglobalshortcut
+	url = git@github.com:hluk/qxtglobalshortcut.git
