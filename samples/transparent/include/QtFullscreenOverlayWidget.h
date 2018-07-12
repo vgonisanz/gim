@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QKeyEvent>
+#include <QVBoxLayout>
+#include <QLabel>
 #include <QDebug>
 
 class QtFullscreenOverlayWidget : public QWidget
@@ -12,9 +14,13 @@ class QtFullscreenOverlayWidget : public QWidget
 public:
     explicit QtFullscreenOverlayWidget(QWidget *parent = 0);
     ~QtFullscreenOverlayWidget();
-    
-protected:
+
+private:
+    QLabel *myLabel;
+    QVBoxLayout *mainLayout;
+
     bool eventFilter(QObject *obj, QEvent *event);
+    void keyPressEvent(QKeyEvent* event);
 };
 
 #endif // CUSTOMWIDGET_H
