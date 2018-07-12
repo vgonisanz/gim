@@ -32,7 +32,6 @@ private:
     std::vector<std::shared_ptr<KeyElement> > _keys;
 
 protected:
-    //bool eventFilter(QObject *obj, QEvent *event);
     void printer();
     void printer(unsigned int index);
 };

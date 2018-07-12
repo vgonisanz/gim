@@ -15,15 +15,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// bool MainWindow::eventFilter(QObject *obj, QEvent *event)
-// {
-//     if (event->type() == QEvent::KeyPress)
-//     {
-//         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-//         qDebug() << "key " << keyEvent->key() << "from" << obj;
-//     }
-//     return QObject::eventFilter(obj, event);
-// }
 void MainWindow::printer(unsigned int index)
 {
     qDebug() << "Pushed: " << _keys[index]->seq->toString();

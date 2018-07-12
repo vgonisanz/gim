@@ -59,11 +59,10 @@ else()
     find_package(qxtglobalshortcut REQUIRED)
 endif()
 
-
 # Project step IV: Add modules
 # ------------------------------------------------------------------------------------------------------
-add_subdirectory(modules)
+#add_subdirectory(modules)
 
 # Project step V: Add samples
 # ------------------------------------------------------------------------------------------------------
-#add_subdirectory(samples)
+add_subdirectory(samples)

@@ -1,6 +1,6 @@
 # Module step I: Set up project name
 # ------------------------------------------------------------------------------------------------------
-set(PROJ_NAME shortcut-lib)  # Front-end with functionality
+set(PROJ_NAME transparent-lib)  # Front-end with functionality
 
 project(${PROJ_NAME})
 
@@ -27,6 +27,7 @@ file(GLOB ${PROJ_NAME}_UI
 qt5_wrap_cpp(${PROJ_NAME}_HEADERS_MOC ${${PROJ_NAME}_HEADERS})
 qt5_wrap_ui(${PROJ_NAME}_UI_MOC ${${PROJ_NAME}_UI})
 
+
 # Module step IV: List of linker search directories. Path to headers needed by the project.
 # ------------------------------------------------------------------------------------------------------
 #link_directories( ${DIR1} ${DIR2} ...)
@@ -42,8 +43,8 @@ target_link_libraries(${PROJ_NAME} Qt5::Widgets)
 ############################
 # Link binary with front-end
 ############################
-set(PROJ_NAME_BIN shortcut-bin)
+set(PROJ_NAME_BIN transparent-bin)
 project(${PROJ_NAME_BIN})
 
 add_executable(${PROJ_NAME_BIN} main.cpp)
-target_link_libraries (${PROJ_NAME_BIN} ${PROJ_NAME} qxtglobalshortcut)
+target_link_libraries(${PROJ_NAME_BIN} ${PROJ_NAME} Qt5::Widgets)
